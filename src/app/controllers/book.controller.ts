@@ -20,7 +20,7 @@ export const createBook = async (req: Request, res: Response, next: NextFunction
 
 
 // Get all books
-export const books = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const books = await Books.find()
 
@@ -36,4 +36,53 @@ export const books = async (req: Request, res: Response, next: NextFunction) => 
 
 
 // Get a single book
+export const getSingleBook = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const bookId = req.params.bookId;
+        const book = await Books.findById(bookId);
 
+        res.status(200).json({
+            success: true,
+            message: "Books retrieved successfully",
+            data: book
+        });
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+// update a book
+export const updateSingleBook = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const bookId = req.params.bookId;
+        const updatedBook = req.body;
+        const book = await Books.findByIdAndUpdate(bookId, updatedBook, { new: true });
+
+        res.status(200).json({
+            success: true,
+            message: "Book updated successfully",
+            data: book
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
+// delete a book
+export const deleteSingleBook = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const bookId = req.params.bookId;
+        const book = await Books.findByIdAndDelete(bookId);
+
+        res.status(200).json({
+            success: true,
+            message: "Book deleted successfully",
+            data: null
+        })
+    } catch (error) {
+        next(error)
+    }
+}
