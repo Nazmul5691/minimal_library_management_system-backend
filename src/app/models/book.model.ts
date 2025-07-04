@@ -51,27 +51,6 @@ const booksSchema = new Schema<IBookDocument, IBookModel>(
 )
 
 
-// booksSchema.statics.borrowBook = async function (bookId: string, quantity: number): Promise<IBookDocument> {
-//     const book = await this.findById(bookId);
-
-//     if (!book) {
-//         throw new Error("Book not found");
-//     }
-
-//     if (!book.available || book.copies < quantity) {
-//         throw new Error("Not enough copies available");
-//     }
-
-//     book.copies -= quantity;
-
-//     if (book.copies === 0) {
-//         book.available = false;
-//     }
-
-//     await book.save();
-
-//     return book;
-// }
 
 booksSchema.statics.borrowBook = async function (bookId: string, quantity: number): Promise<IBookDocument> {
     const book = await this.findById(bookId);
@@ -92,12 +71,7 @@ booksSchema.statics.borrowBook = async function (bookId: string, quantity: numbe
         book.available = false;
     }
 
-    console.log('book save', book);
-    
     await book.save();
-
-
-    console.log('82no');
 
     return book;
 };
