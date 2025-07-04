@@ -53,21 +53,44 @@ export const getSingleBook = async (req: Request, res: Response, next: NextFunct
 
 
 // update a book
+// export const updateSingleBook = async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         const bookId = req.params.bookId;
+//         const updatedBook = req.body;
+//         const book = await Books.findByIdAndUpdate(bookId, updatedBook, { new: true });
+
+//         res.status(200).json({
+//             success: true,
+//             message: "Book updated successfully",
+//             data: book
+//         })
+//     } catch (error) {
+//         next(error)
+//     }
+// }
+
 export const updateSingleBook = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const bookId = req.params.bookId;
         const updatedBook = req.body;
+
+        // Check if copies is being updated
+        if (typeof updatedBook.copies === "number") {
+            updatedBook.available = updatedBook.copies > 0;
+        }
+
         const book = await Books.findByIdAndUpdate(bookId, updatedBook, { new: true });
 
         res.status(200).json({
             success: true,
             message: "Book updated successfully",
             data: book
-        })
+        });
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
+
 
 
 

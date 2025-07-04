@@ -7,9 +7,12 @@ import { Borrow } from "../models/borrow.model";
 export const createBorrow = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { book, quantity, dueDate } = req.body;
-        const updatedBookAvailability = await Books.borrowBook(book, quantity);
+        
 
         const borrow = await Borrow.create({ book, quantity, dueDate });
+        console.log(borrow);
+        const updatedBookAvailability = await Books.borrowBook(book, quantity);
+        console.log('update book',updatedBookAvailability);
 
         res.status(201).json({
             success: true,
@@ -21,6 +24,10 @@ export const createBorrow = async (req: Request, res: Response, next: NextFuncti
         next(error)
     }
 }
+
+
+
+
 
 
 // books borrow summary
