@@ -11,7 +11,12 @@ const router = express.Router()
 app.use(express.json());
 // app.use(router);
 
-app.use(cors({ origin: "http://localhost:5173" }))
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://minimal-library-management-system-f.vercel.app"
+    ]
+}));
 
 
 
